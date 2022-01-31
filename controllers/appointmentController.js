@@ -1,7 +1,7 @@
 const Express = require("express");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
-const { PostModel } = require("../models");
+
 
 /*
 ======================
@@ -21,13 +21,8 @@ router.post("/create", validateJWT, async (req, res) => {
   
   try {
     const newPost = await PostModel.create({
-      artist_name,
-      url,
-      description,
-      style,
-      era,
-      for_sale: forSale,
-      price,
+      date,
+      time,
       owner_id: id,
       email: email,
     });
@@ -42,7 +37,7 @@ router.post("/create", validateJWT, async (req, res) => {
 
 /*
 ========================================
-   Get All Posts 
+   Get All Appointments for a User
 ========================================
 http://localhost:3000/art/
 */

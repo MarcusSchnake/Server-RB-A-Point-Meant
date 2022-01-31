@@ -1,5 +1,5 @@
 module.exports = {
     userController: require('./userController'),
-    postsController: require('./postsController')
+    appointmentController: require('./appointmentController')
 };
 
