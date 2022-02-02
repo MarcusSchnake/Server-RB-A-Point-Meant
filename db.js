@@ -3,7 +3,7 @@ const sequelize = new Sequelize (process.env.DATABASE_URL, {
     
     dialect: 'postgres',
 
-    dialectOption:
+    dialectOptions:
         process.env.ENV  === 'local' ? {} :    {
         ssl: {
             require:true,
