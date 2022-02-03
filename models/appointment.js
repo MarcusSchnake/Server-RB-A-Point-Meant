@@ -2,11 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("../db");
 
 const Appointment = db.define("appointment", {
-    appointment: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-
+   
     client_name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -21,6 +17,7 @@ const Appointment = db.define("appointment", {
         type: DataTypes.STRING,
         allowNull: false
     },
+
     date: {
         type: DataTypes.INTEGER,
         allowNull: false

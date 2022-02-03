@@ -7,7 +7,7 @@ const validateJWT = require("../middleware/validate-jwt");
 ======================
     Create a Post
 ======================
-http://localhost:3000/art/create
+
 */
 router.post("/create", validateJWT, async (req, res) => {
   const { client_name, phone, date, time, note } =
@@ -77,7 +77,7 @@ router.get("/user", validateJWT, async (req, res) => {
 http://localhost:3000/art/update/:entryid
 */
 router.put("/update/:entryId", validateJWT, async (req, res) => {
-  const { client_name, phone, email, date, time, note} =
+  const { client_name, phone, email, date, time, note } =
     req.body.appointment;
   const appointmentId = req.params.entryId;
   const userId = req.user.id;
