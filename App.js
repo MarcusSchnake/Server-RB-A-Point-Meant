@@ -18,7 +18,7 @@ app.use("/user", controllers.userController);// endpoint beginning with /user
 
 dbConnection.authenticate()
     .then(() => dbConnection.sync(
-        {force: true}
+        // {force: true}
     ))
         .then(() => {
             app.listen(process.env.PORT, () => {
