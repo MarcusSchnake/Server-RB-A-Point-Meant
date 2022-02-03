@@ -2,7 +2,11 @@ const { DataTypes } = require("sequelize");
 const db = require("../db");
 
 const Appointment = db.define("appointment", {
-   
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     client_name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -19,7 +23,7 @@ const Appointment = db.define("appointment", {
     },
 
     date: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: false
     },
 
