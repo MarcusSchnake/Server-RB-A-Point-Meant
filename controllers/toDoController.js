@@ -2,7 +2,7 @@ const Express = require("express");
 const { UniqueConstraintError } = require("sequelize");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
-const {toDoModel} = require("../models");
+const {ToDo} = require("../models");
 
 
 /*
@@ -12,14 +12,14 @@ const {toDoModel} = require("../models");
 
 */
 router.post("/create", validateJWT, async (req, res) => {
-  const { subject, todo_item } = req.body.todo_item;
+  const { subject, todo_item, apptId } = req.body.todo;
 //   const { id } = req.user;
  
   try {
-    const newToDo = await todoModel.create({
+    const newToDo = await ToDo.create({
       subject,
       todo_item,
-      apptId:id
+      apptId
     });
     res.status(201).json({
       message: "To Do Item Created!",
@@ -39,24 +39,40 @@ http://localhost:3000/art/
 
 router.get("/", validateJWT, async (req, res) => {
   try {
-    const todo_item = await AppointmentModel.findAll();
-    res.status(200).json(userAppointment);
+    const todo_item = await ToDo.findAll();
+    res.status(200).json(todo_item);
   } catch (err) {
     res.status(500).json({ error: err });
   }
 });
 
-// GET ALL POSTS OF AN INDIVIDUAL USER
-router.get("/user", validateJWT, async (req, res) => {
-  const { id } = req.user;
-
+// GET ALL TODO'S OF AN INDIVIDUAL USER
+router.get("/:id", validateJWT, async (req, res) => {
+  const id = req.params.id
+  
   try {
-    const userAppointment = await AppointmentModel.findAll({
+    const todo_item = await ToDo.findOne({
       where: {
-        owner_id: id,
+        id,
       },
     });
-    res.status(200).json(userAppointment);
+    res.status(200).json(todo_item);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+//pulls all todo by appointment ID aka apptId.
+router.get("/appt/:id", validateJWT, async (req, res) => {
+  const id = req.params.id;
+  // const { id } = req.user;
+
+  try {
+    const todo_item = await ToDo.findAll({
+      where: {
+        apptId:id,
+      },
+    });
+    res.status(200).json(todo_item);
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -64,33 +80,28 @@ router.get("/user", validateJWT, async (req, res) => {
 
 /*
 ===============================
-   Update a post by a user
+   Update a todo by a user
 ===============================
 http://localhost:3000/art/update/:entryid
 */
-router.put("/update/:entryId", validateJWT, async (req, res) => {
-  const { client_name, phone, email, date, time, note } =
-    req.body.appointment;
-  const appointmentId = req.params.entryId;
-  const userId = req.user.id;
+router.put("/:id", validateJWT, async (req, res) => {
+  const { subject, todo_item } =
+    req.body.todo;
+  const id = req.params.id;
+  
 
   const query = {
     where: {
-      id: appointmentId,
-      owner_id: userId,
+      id,
     },
   };
-  const updatePost = {
-    client_name: client_name,
-     phone: phone, 
-     email: email,  
-     date: date,
-      time: time,
-      note: note,
+  const updateToDo = {
+    subject,
+    todo_item
   };
   try {
-    const update = await AppointmentModel.update(updateAppointment, query);
-    res.status(200).json(update);
+    const update = await ToDo.update(updateToDo, query);
+    res.status(200).json({message:"Todo is updated!"});
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -103,19 +114,17 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 http://localhost:3000/art/:id
 */
 router.delete("/:id", validateJWT, async (req, res) => {
-  const ownerId = req.user.id;
-  const appointmentId = req.params.id;
+  const id = req.params.id;
 
   try {
     const query = {
       where: {
-        id: appointmentId,
-        owner_id: ownerId,
+        id,
       },
     };
 
-    await AppointmentModel.destroy(query);
-    res.status(200).json({ message: "Appointment Canceled" });
+    await ToDo.destroy(query);
+    res.status(200).json({ message: "Todo Deleted!" });
   } catch (err) {
     res.status(500).json({ error: err });
   }
