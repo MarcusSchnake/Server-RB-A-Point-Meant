@@ -1,7 +1,10 @@
 const Express = require("express");
+const { UniqueConstraintError } = require("sequelize");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
+const {AppointmentModel} = require("../models");
 
+// let appointmentDateTime = Math.round(new Date().getTime()/1000)
 
 /*
 ======================
@@ -10,17 +13,40 @@ const validateJWT = require("../middleware/validate-jwt");
 
 */
 router.post("/create", validateJWT, async (req, res) => {
-  const { client_name, phone, date, time, note } =
+  const { client_name, phone, date, time, note, email } =
     req.body.appointment;
   const { id } = req.user;
-  const email = req.email;
+ 
+  // console.log(appointmentDateTime);
+ 
+  //Try function to check for overlapping times, if there is an overlap, return a decline message, get query start time between start time and end time
 
-  // const forSale = for_sale === "on" ? true : false;
-  // const priceInt = parseInt(price);
-  // console.log(priceInt);
+  // try {
+  //   AppointModel.findOne({
+  //     where: {
+  //       id: id,
+  //       date: date, 
+  //       time: time,
+  //     },
+  //   });
+
+  // } catch (err) {
+  //    if (err instanceof UniqueConstraintError) {
+
+  //     res.status(409).json({
+  //       message: "Appointment time already booked.",
+  //     });
+  //   } else {
+  //     res.status(500).json({
+  //       message: "Appointment Error.",
+  //     });
+  //   }
+  // }
+
   
+
   try {
-    const newPost = await AppointmentModel.create({
+    const newAppointment = await AppointmentModel.create({
       client_name,
       phone,
       date,

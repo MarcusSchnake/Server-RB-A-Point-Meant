@@ -13,7 +13,7 @@ const Appointment = db.define("appointment", {
     },
 
     phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     },
 
