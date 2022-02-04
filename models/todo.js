@@ -1,12 +1,18 @@
-//two diff type of data day and then date and time, need to be stored separately, in the calendar model
 const { DataTypes } = require("sequelize");
 const db = require("../db");
 
-const Message = db.define("message", {
+const ToDo = db.define("todo", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
+    },
+
+    apptId: {
+        type:DataTypes.INTEGER,
+        foreignKey: true,
+        allowNull: false
+
     },
 
     subject: {
@@ -14,7 +20,7 @@ const Message = db.define("message", {
         allowNull: false
     },
 
-    message: {
+    todo_item: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -22,4 +28,4 @@ const Message = db.define("message", {
 
 })
 
-module.exports = Message;
+module.exports = ToDo;

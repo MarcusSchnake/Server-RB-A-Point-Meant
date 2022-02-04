@@ -2,62 +2,27 @@ const Express = require("express");
 const { UniqueConstraintError } = require("sequelize");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
-const {AppointmentModel} = require("../models");
+const {toDoModel} = require("../models");
 
-// let appointmentDateTime = Math.round(new Date().getTime()/1000)
 
 /*
 ======================
-    Create a Post
+    Create a ToDo
 ======================
 
 */
 router.post("/create", validateJWT, async (req, res) => {
-  const { client_name, phone, date, time, note, email } =
-    req.body.appointment;
-  const { id } = req.user;
-  
+  const { subject, todo_item } = req.body.todo_item;
+//   const { id } = req.user;
  
-  // console.log(appointmentDateTime);
- 
-  //Try function to check for overlapping times, if there is an overlap, return a decline message, get query start time between start time and end time
-
-  // try {
-  //   AppointModel.findOne({
-  //     where: {
-  //       id: id,
-  //       date: date, 
-  //       time: time,
-  //     },
-  //   });
-
-  // } catch (err) {
-  //    if (err instanceof UniqueConstraintError) {
-
-  //     res.status(409).json({
-  //       message: "Appointment time already booked.",
-  //     });
-  //   } else {
-  //     res.status(500).json({
-  //       message: "Appointment Error.",
-  //     });
-  //   }
-  // }
-
-  
-
   try {
-    const newAppointment = await AppointmentModel.create({
-      client_name,
-      phone,
-      date,
-      time,
-      note,
-      userId:id,
-      email: email,
+    const newToDo = await todoModel.create({
+      subject,
+      todo_item,
+      apptId:id
     });
     res.status(201).json({
-      message: "Appointment set!",
+      message: "To Do Item Created!",
     });
   } catch (err) {
     console.error(err);
@@ -74,7 +39,7 @@ http://localhost:3000/art/
 
 router.get("/", validateJWT, async (req, res) => {
   try {
-    const userAppointment = await AppointmentModel.findAll();
+    const todo_item = await AppointmentModel.findAll();
     res.status(200).json(userAppointment);
   } catch (err) {
     res.status(500).json({ error: err });

@@ -15,10 +15,11 @@ app.use(cors({
 
 app.use("/user", controllers.userController);// endpoint beginning with /user
  app.use("/appointment", controllers.appointmentController); // endpoint beginning with /art
+app.use("/todo", controllers.toDoController);
 
 dbConnection.authenticate()
     .then(() => dbConnection.sync(
-        // {force: true}
+        //{force: true}
     ))
         .then(() => {
             app.listen(process.env.PORT, () => {

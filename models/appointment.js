@@ -7,6 +7,13 @@ const Appointment = db.define("appointment", {
         primaryKey: true,
         autoIncrement: true
     },
+
+    userId:{
+        type: DataTypes.INTEGER,
+        foreignKey: true,
+        allowNull:false
+    },
+    
     client_name: {
         type: DataTypes.STRING,
         allowNull: false

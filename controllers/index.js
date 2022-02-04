@@ -1,5 +1,6 @@
 module.exports = {
     userController: require('./userController'),
-    appointmentController: require('./appointmentController')
+    appointmentController: require('./appointmentController'),
+    toDoController: require('./toDoController')
 };
 

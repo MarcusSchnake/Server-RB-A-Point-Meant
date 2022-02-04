@@ -2,12 +2,12 @@ const db = require("../db");
 
 const UserModel = require('./user');
 const AppointmentModel = require('./appointment');
-const Message = require = ('./message');
+const ToDo = require ('./todo');
 
 
 
 module.exports = { 
     UserModel,
     AppointmentModel,
-    Message
+    ToDo
 };
