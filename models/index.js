@@ -8,5 +8,6 @@ const Message = require = ('./message');
 
 module.exports = { 
     UserModel,
-    AppointmentModel
+    AppointmentModel,
+    Message
 };

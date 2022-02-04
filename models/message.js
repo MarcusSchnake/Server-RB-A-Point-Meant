@@ -8,9 +8,9 @@ const Message = db.define("message", {
         primaryKey: true,
         autoIncrement: true
     },
-    
+
     subject: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false
     },
 
