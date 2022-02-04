@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, UniqueConstraintError } = require("sequelize");
 const db = require("../db");
 
 const Appointment = db.define("appointment", {
@@ -29,14 +29,8 @@ const Appointment = db.define("appointment", {
         allowNull: false
     },
 
-    date: {
+    startDateTime: {
         type: DataTypes.DATE,
-        allowNull: false,
-        unique: true
-    },
-
-    time: {
-        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true
     },
