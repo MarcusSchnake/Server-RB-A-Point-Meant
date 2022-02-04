@@ -8,12 +8,12 @@ const Appointment = db.define("appointment", {
         autoIncrement: true
     },
 
-    userId:{
+    userId: {
         type: DataTypes.INTEGER,
         foreignKey: true,
-        allowNull:false
+        allowNull: false
     },
-    
+
     client_name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -31,13 +31,16 @@ const Appointment = db.define("appointment", {
 
     date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
 
     time: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
+
     note: {
         type: DataTypes.STRING,
         allowNull: true
@@ -45,6 +48,6 @@ const Appointment = db.define("appointment", {
 
 
 
-})
+});
 
 module.exports = Appointment;

@@ -16,33 +16,30 @@ router.post("/create", validateJWT, async (req, res) => {
   const { client_name, phone, date, time, note, email } =
     req.body.appointment;
   const { id } = req.user;
-  
- 
-  // console.log(appointmentDateTime);
  
   //Try function to check for overlapping times, if there is an overlap, return a decline message, get query start time between start time and end time
 
-  // try {
-  //   AppointModel.findOne({
-  //     where: {
-  //       id: id,
-  //       date: date, 
-  //       time: time,
-  //     },
-  //   });
+  try {
+    AppointmentModel.findAll( {
+      where: {
+        userId: id,// If this has to be removed in next iteration Aaron owes me a quad sauce pizza day
+        date: date, 
+        time: time,
+      },
+    });
 
-  // } catch (err) {
-  //    if (err instanceof UniqueConstraintError) {
+  } catch (err) {
+     if (UniqueConstraintError) {
 
-  //     res.status(409).json({
-  //       message: "Appointment time already booked.",
-  //     });
-  //   } else {
-  //     res.status(500).json({
-  //       message: "Appointment Error.",
-  //     });
-  //   }
-  // }
+      res.status(409).json({
+        message: "Appointment time already booked.",
+      });
+    } else {
+      res.status(500).json({
+        message: "Appointment Error.",
+      });
+    }
+  }
 
   
 
