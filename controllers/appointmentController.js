@@ -13,33 +13,33 @@ const {AppointmentModel} = require("../models");
 
 */
 router.post("/create", validateJWT, async (req, res) => {
-  const { client_name, phone, date, time, note, email } =
+  const { client_name, phone, startDateTime, note, email } =
     req.body.appointment;
   const { id } = req.user;
  
   //Try function to check for overlapping times, if there is an overlap, return a decline message, get query start time between start time and end time
 
-  try {
-    AppointmentModel.findAll( {
-      where: {
-        userId: id,// If this has to be removed in next iteration Aaron owes me a quad sauce pizza day
-        date: date, 
-        time: time,
-      },
-    });
+  // try {
+  //   const query = AppointmentModel.findAll( {
+  //     where: {
+  //       userId: id,// If this has to be removed in next iteration Aaron owes me a quad sauce pizza day
+  //       startDateTime:startDateTime,
+  //     },
+  //   });
+  //   console.log(query);
 
-  } catch (err) {
-     if (UniqueConstraintError) {
+  // } catch (err) {
+  //    if (UniqueConstraintError) {
 
-      res.status(409).json({
-        message: "Appointment time already booked.",
-      });
-    } else {
-      res.status(500).json({
-        message: "Appointment Error.",
-      });
-    }
-  }
+  //     res.status(409).json({
+  //       message: "Appointment time already booked.",
+  //     });
+  //   } else {
+  //     res.status(500).json({
+  //       message: "Appointment Error.",
+  //     });
+  //   }
+  // }
 
   
 
@@ -47,8 +47,7 @@ router.post("/create", validateJWT, async (req, res) => {
     const newAppointment = await AppointmentModel.create({
       client_name,
       phone,
-      date,
-      time,
+      startDateTime,
       note,
       userId:id,
       email: email,
