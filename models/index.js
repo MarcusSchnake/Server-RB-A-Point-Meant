@@ -4,9 +4,8 @@ const userModel= require("./user");
 const appointmentModel = require('./appointment');
 const todoModel = require('./todo');
 
-userModel.hasMany(appointmentModel,
-    { foreignKey: true,
-        onDelete:"CASCADE"
+userModel.hasMany(appointmentModel,{
+    onDelete:"CASCADE"
 });
 
 appointmentModel.hasMany(todoModel,{
