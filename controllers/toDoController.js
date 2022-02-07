@@ -2,7 +2,7 @@ const Express = require("express");
 const { UniqueConstraintError } = require("sequelize");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
-const {ToDo} = require("../models");
+const {ToDoModel} = require("../models");
 
 
 /*
@@ -12,14 +12,14 @@ const {ToDo} = require("../models");
 
 */
 router.post("/create", validateJWT, async (req, res) => {
-  const { subject, todo_item, apptId } = req.body.todo;
+  const { subject, todo_item, appointmentId } = req.body.ToDo;
 //   const { id } = req.user;
  
   try {
-    const newToDo = await ToDo.create({
+    const newToDo = await ToDoModel.create({
       subject,
       todo_item,
-      apptId
+      appointmentId,
     });
     res.status(201).json({
       message: "To Do Item Created!",
@@ -46,7 +46,7 @@ router.get("/", validateJWT, async (req, res) => {
   }
 });
 
-// GET ALL TODO'S OF AN INDIVIDUAL USER
+// GET ALL TO DO'S OF AN INDIVIDUAL USER
 router.get("/:id", validateJWT, async (req, res) => {
   const id = req.params.id
   
@@ -69,7 +69,7 @@ router.get("/appt/:id", validateJWT, async (req, res) => {
   try {
     const todo_item = await ToDo.findAll({
       where: {
-        apptId:id,
+        appointmentId,
       },
     });
     res.status(200).json(todo_item);

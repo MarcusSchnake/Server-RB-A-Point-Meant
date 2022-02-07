@@ -11,14 +11,14 @@ const app = express();
 app.use(require("./middleware/headers"));
 app.use(express.json());
 app.use(cors({ origin: '*' }));
-app.use("./user", controllers.userController);// endpoint beginning with /user
-app.use("./appointment", controllers.appointmentController); // endpoint beginning with /art
-app.use("./todo", controllers.toDoController);
+app.use("/user", controllers.userController);// endpoint beginning with /user
+app.use("/appointment", controllers.appointmentController); // endpoint beginning with /art
+app.use("/todo", controllers.toDoController);
 
 
 dbConnection.authenticate() 
     .then(() => dbConnection.sync(
-        //{force: true}
+        {force: true}
     ))
     .then(() => {
         app.listen(process.env.PORT, () => {
