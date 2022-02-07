@@ -1,17 +1,18 @@
-const { DataTypes, UniqueConstraintError } = require("sequelize");
+const { DataTypes } = require("sequelize");// had {DataTypes, UniqueContrstraintError}
 const db = require("../db");
 
 const Appointment = db.define("appointment", {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
-        autoIncrement: true
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
     },
 
     userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         foreignKey: true,
-        allowNull: false
+        allowNull: false,
     },
 
     client_name: {

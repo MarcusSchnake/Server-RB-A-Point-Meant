@@ -1,13 +1,33 @@
 const db = require("../db");
 
-const UserModel = require('./user');
-const AppointmentModel = require('./appointment');
-const ToDo = require ('./todo');
+const userModel= require("./user");
+const appointmentModel = require('./appointment');
+const todoModel = require('./todo');
+
+userModel.hasMany(appointmentModel,
+    { foreignKey: true,
+        onDelete:"CASCADE"
+});
+
+appointmentModel.hasMany(todoModel,{
+    onDelete:"CASCADE",
+});
+
+todoModel.belongsTo(appointmentModel,{
+    onDelete:"CASCADE",
+});
+
+appointmentModel.belongsTo(userModel,{
+    onDelete:"CASCADE",
+});
+
+
 
 
 
 module.exports = { 
-    UserModel,
-    AppointmentModel,
-    ToDo
+    dbConnection: db,
+    userModel,
+    appointmentModel,
+    todoModel
 };

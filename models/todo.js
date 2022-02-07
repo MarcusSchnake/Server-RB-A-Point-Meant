@@ -3,15 +3,17 @@ const db = require("../db");
 
 const ToDo = db.define("todo", {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
-        autoIncrement: true
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+
     },
 
-    apptId: {
-        type:DataTypes.INTEGER,
+    appointmentId: {
+        type: DataTypes.UUID,
         foreignKey: true,
-        allowNull: false
+        allowNull: false,
 
     },
 
@@ -26,6 +28,6 @@ const ToDo = db.define("todo", {
     },
 
 
-})
+});
 
 module.exports = ToDo;

@@ -2,7 +2,7 @@ const Express = require("express");
 const { UniqueConstraintError } = require("sequelize");
 const router = Express.Router();
 const validateJWT = require("../middleware/validate-jwt");
-const {AppointmentModel} = require("../models");
+const { AppointmentModel } = require("../models");
 
 // let appointmentDateTime = Math.round(new Date().getTime()/1000)
 
@@ -16,32 +16,7 @@ router.post("/create", validateJWT, async (req, res) => {
   const { client_name, phone, startDateTime, note, email } =
     req.body.appointment;
   const { id } = req.user;
- 
-  //Try function to check for overlapping times, if there is an overlap, return a decline message, get query start time between start time and end time
 
-  // try {
-  //   const query = AppointmentModel.findAll( {
-  //     where: {
-  //       userId: id,// If this has to be removed in next iteration Aaron owes me a quad sauce pizza day
-  //       startDateTime:startDateTime,
-  //     },
-  //   });
-  //   console.log(query);
-
-  // } catch (err) {
-  //    if (UniqueConstraintError) {
-
-  //     res.status(409).json({
-  //       message: "Appointment time already booked.",
-  //     });
-  //   } else {
-  //     res.status(500).json({
-  //       message: "Appointment Error.",
-  //     });
-  //   }
-  // }
-
-  
 
   try {
     const newAppointment = await AppointmentModel.create({
@@ -49,7 +24,7 @@ router.post("/create", validateJWT, async (req, res) => {
       phone,
       startDateTime,
       note,
-      userId:id,
+      userId: id,
       email: email,
     });
     res.status(201).json({
@@ -113,11 +88,11 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
   };
   const updatePost = {
     client_name: client_name,
-     phone: phone, 
-     email: email,  
-     date: date,
-      time: time,
-      note: note,
+    phone: phone,
+    email: email,
+    date: date,
+    time: time,
+    note: note,
   };
   try {
     const update = await AppointmentModel.update(updateAppointment, query);
