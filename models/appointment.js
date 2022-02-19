@@ -21,7 +21,7 @@ const Appointment = db.define("appointment", {
     },
 
     phone: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING,//needs to be number
         allowNull: false
     },
 

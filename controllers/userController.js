@@ -7,10 +7,16 @@ const bcrypt = require("bcryptjs");
 router.post("/register", async (req, res) => {
   let { email, password } = req.body?.user;
   try {
+    if (email.length < 8 || password.length < 8) {
+      res.status(400).json({
+        message: "Email and password must be at least 8 characters long.",
+      });
+    }
     const User = await UserModel.create({
       email,
       password: bcrypt.hashSync(password, 10),
     });
+
 
     let token = jwt.sign({ id: User.id }, process.env.JWT_SECRET, {
       expiresIn: 60 * 60 * 24,
@@ -39,6 +45,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   let { email, password } = req.body.user;
   try {
+    if (email.length < 8 || password.length < 8) {
+      res.status(400).json({
+        message: "Email and password must be at least 8 characters long.",
+      });
+    }
     const loginUser = await UserModel.findOne({
       where: {
         email: email,
