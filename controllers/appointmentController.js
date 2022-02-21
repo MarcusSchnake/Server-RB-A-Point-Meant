@@ -45,7 +45,8 @@ http://localhost:3000/art/
 
 router.get("/", validateJWT, async (req, res) => {
   try {
-    const userAppointment = await AppointmentModel.findAll();
+    const userAppointment = await AppointmentModel.findAll({
+    });
     res.status(200).json(userAppointment);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -54,12 +55,30 @@ router.get("/", validateJWT, async (req, res) => {
 
 // GET ALL POSTS OF AN INDIVIDUAL USER
 router.get("/user", validateJWT, async (req, res) => {
+  
   const { id } = req.user;
+  
 
   try {
     const userAppointment = await AppointmentModel.findAll({
       where: {
         owner_id: id,
+
+      },
+    });
+    res.status(200).json(userAppointment);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+//Get by ID
+router.get("/:id", validateJWT, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userAppointment = await AppointmentModel.findOne({
+      where: {
+        id,
       },
     });
     res.status(200).json(userAppointment);
@@ -75,32 +94,34 @@ router.get("/user", validateJWT, async (req, res) => {
 http://localhost:3000/art/update/:entryid
 */
 router.put("/update/:entryId", validateJWT, async (req, res) => {
-  const { client_name, phone, email, date, time, note } =
-    req.body.appointment;
+  const { client_name, phone, email, startDateTime, note } = req.body.appointment;
   const appointmentId = req.params.entryId;
   const userId = req.user.id;
+  console.log(req.body.appointment);
 
   const query = {
     where: {
       id: appointmentId,
-      owner_id: userId,
+      userId: userId,
     },
   };
-  const updatePost = {
+  const updateAppointment = {
     client_name: client_name,
     phone: phone,
     email: email,
-    date: date,
-    time: time,
+    startDateTime: startDateTime,
     note: note,
   };
   try {
     const update = await AppointmentModel.update(updateAppointment, query);
+    console.log(update);
     res.status(200).json(update);
   } catch (err) {
     res.status(500).json({ error: err });
   }
+
 });
+
 
 /*
 ========================================
@@ -108,7 +129,7 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 ========================================
 http://localhost:3000/art/:id
 */
-router.delete("/:id", validateJWT, async (req, res) => {
+router.delete("/delete/:id", validateJWT, async (req, res) => {
   const ownerId = req.user.id;
   const appointmentId = req.params.id;
 
@@ -116,7 +137,7 @@ router.delete("/:id", validateJWT, async (req, res) => {
     const query = {
       where: {
         id: appointmentId,
-        owner_id: ownerId,
+        userId: ownerId,
       },
     };
 
