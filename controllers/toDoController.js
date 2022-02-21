@@ -34,7 +34,7 @@ router.post("/create", validateJWT, async (req, res) => {
 ========================================
    Get All Appointments for a User
 ========================================
-http://localhost:3000/art/
+
 */
 
 router.get("/", validateJWT, async (req, res) => {
@@ -86,7 +86,7 @@ router.get("/appt/:id", validateJWT, async (req, res) => {
 ===============================
    Update a todo by a user
 ===============================
-http://localhost:3000/art/update/:entryid
+
 */
 router.put("/:id", validateJWT, async (req, res) => {
   const { subject, todo_item } =
@@ -115,7 +115,7 @@ router.put("/:id", validateJWT, async (req, res) => {
 ========================================
    Delete Individual Post of a User
 ========================================
-http://localhost:3000/art/:id
+
 */
 router.delete("/:id", validateJWT, async (req, res) => {
   const id = req.params.id;
