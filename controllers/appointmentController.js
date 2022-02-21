@@ -40,7 +40,7 @@ router.post("/create", validateJWT, async (req, res) => {
 ========================================
    Get All Appointments for a User
 ========================================
-http://localhost:3000/art/
+
 */
 
 router.get("/", validateJWT, async (req, res) => {
@@ -91,7 +91,7 @@ router.get("/:id", validateJWT, async (req, res) => {
 ===============================
    Update a post by a user
 ===============================
-http://localhost:3000/art/update/:entryid
+
 */
 router.put("/update/:entryId", validateJWT, async (req, res) => {
   const { client_name, phone, email, startDateTime, note } = req.body.appointment;
@@ -127,7 +127,7 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
 ========================================
    Delete Individual Post of a User
 ========================================
-http://localhost:3000/art/:id
+
 */
 router.delete("/delete/:id", validateJWT, async (req, res) => {
   const ownerId = req.user.id;
